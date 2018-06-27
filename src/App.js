@@ -68,6 +68,28 @@ class App extends Component {
             {"value": 7, "text": "Otro"},
         ];
 
+        const optionsStudyLevel = [
+            {"value": 1, "text": "Sin nivel"},
+            {"value": 2, "text": "Inicial"},
+            {"value": 3, "text": "Primaria"},
+            {"value": 4, "text": "Secundaria"},
+            {"value": 5, "text": "Superior no universitaria"},
+            {"value": 6, "text": "Superior universitaria"},
+            {"value": 7, "text": "Post - grado u otro similar"},
+            {"value": 8, "text": "No sabe"},
+        ];
+
+        const optionsPreSchool = [
+            {"value": 1, "text": "Publico"},
+            {"value": 2, "text": "Particular"},
+            {"value": 3, "text": "Ninguno"},
+        ];
+
+        const optionsElementarySchool = [
+            {"value": 1, "text": "Publico"},
+            {"value": 2, "text": "Particular"},
+        ];
+
         return (
             <div className="App">
                 <header className="App-header">
@@ -75,6 +97,7 @@ class App extends Component {
                     <h1 className="App-title">Welcome to React</h1>
                 </header>
                 <form>
+                    {/*Economico*/}
                     <Question type="select" name="housing-type" question="¿Cual es tu tipo de vivienda?" options={optionsHousingType}/>
                     <Question type="select" name="wall-material" question="Material predominante en paredes" options={optionsWallMaterial}/>
                     <Question type="select" name="floor-material" question="Material predominante en el piso" options={optionsFloorMaterial}/>
@@ -91,6 +114,20 @@ class App extends Component {
                     <Question type="yes-no" name="laptop" question="Laptop"/>
                     <Question type="yes-no" name="internet" question="Servicio de Internet"/>
                     <Question type="text" name="number-family-members" question="Miembros de la familia"/>
+                    {/*Social*/}
+                    <Question type="select" name="father-study-level" question="Nivel educativo del padre" options={optionsStudyLevel}/>
+                    <Question type="select" name="mother-study-level" question="Nivel educativo de la madre" options={optionsStudyLevel}/>
+                    {/*Academico*/}
+                    <Question type="select" name="pre-school" question="Educacion inicial" options={optionsPreSchool}/>
+                    <Question type="select" name="elementary-school" question="Educacion primaria" options={optionsElementarySchool}/>
+                    <Question type="yes-no" name="reprobate-before" question="Repitio algun grado?"/>
+                    <Question type="text" name="number-reprobate" question="Numero de veces repetidas"/>
+                    <Question type="yes-no" name="vocational-orientation" question="Prueba de orientacion vocacional?"/>
+                    <Question type="yes-no" name="vocational-talk" question="Charla vocacional?"/>
+                    <Question type="yes-no" name="vocational-fair" question="Feria acerca de carreras ofrecidas?"/>
+                    <Question type="yes-no" name="admission-exam-simulation" question="Simulacro examen de admision?"/>
+                    <Question type="yes-no" name="academy-preparation" question="Se preparo en Academia?"/>
+                    <Question type="yes-no" name="study-institute" question="Estudio en Instituto?"/>
                 </form>
             </div>
         );
