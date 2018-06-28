@@ -3,7 +3,45 @@ import logo from './logo.svg';
 import './App.css';
 import Question from './Question';
 
+
 class App extends Component {
+    register() {
+        try {
+            const fields = [
+                document.querySelector("[name='housing-type']").value,
+                document.querySelector("[name='wall-material']").value,
+                document.querySelector("[name='floor-material']").value,
+                document.querySelector("[name='roof-material']").value,
+                document.querySelector("[name='number-bedroom']").value,
+                document.querySelector("[name='water-provider']").value,
+                document.querySelector("[name='drainage']").value,
+                document.querySelector("[name='electricity']:checked").value,
+                document.querySelector("[name='stereo']:checked").value,
+                document.querySelector("[name='tv']:checked").value,
+                document.querySelector("[name='cable']:checked").value,
+                document.querySelector("[name='fridge']:checked").value,
+                document.querySelector("[name='computer']:checked").value,
+                document.querySelector("[name='laptop']:checked").value,
+                document.querySelector("[name='internet']:checked").value,
+                document.querySelector("[name='number-family-members']").value,
+                document.querySelector("[name='father-study-level']").value,
+                document.querySelector("[name='mother-study-level']").value,
+                document.querySelector("[name='pre-school']").value,
+                document.querySelector("[name='elementary-school']").value,
+                document.querySelector("[name='reprobate-before']:checked").value,
+                document.querySelector("[name='number-reprobate").value,
+                document.querySelector("[name='vocational-orientation']:checked").value,
+                document.querySelector("[name='vocational-talk']:checked").value,
+                document.querySelector("[name='vocational-fair']:checked").value,
+                document.querySelector("[name='admission-exam-simulation']:checked").value,
+                document.querySelector("[name='academy-preparation']:checked").value,
+                document.querySelector("[name='study-institute']:checked").value,
+            ];
+
+        } catch (e) {
+            alert("Faltan rellenar campos");
+        }
+    }
     render() {
         const optionsHousingType = [
             {"value": 1, "text": "Casa independiente"},
@@ -97,37 +135,41 @@ class App extends Component {
                     <h1 className="App-title">Welcome to React</h1>
                 </header>
                 <form>
-                    {/*Economico*/}
-                    <Question type="select" name="housing-type" question="¿Cual es tu tipo de vivienda?" options={optionsHousingType}/>
-                    <Question type="select" name="wall-material" question="Material predominante en paredes" options={optionsWallMaterial}/>
-                    <Question type="select" name="floor-material" question="Material predominante en el piso" options={optionsFloorMaterial}/>
-                    <Question type="select" name="floor-material" question="Material predominante en el techo" options={optionsRoofMaterial}/>
-                    <Question type="text" name="number-bedroom" question="Numero de dormitorios"/>
-                    <Question type="select" name="water-provider" question="Abastecimiento de agua" options={optionsWaterProvider}/>
-                    <Question type="select" name="drainage" question="Desagüe" options={optionsDrainage}/>
-                    <Question type="yes-no" name="electricity" question="Electricidad"/>
-                    <Question type="yes-no" name="stereo" question="Equipo de Sonido"/>
-                    <Question type="yes-no" name="tv" question="TV"/>
-                    <Question type="yes-no" name="cable" question="Cable"/>
-                    <Question type="yes-no" name="fridge" question="Refrigeradora"/>
-                    <Question type="yes-no" name="computer" question="Computadora"/>
-                    <Question type="yes-no" name="laptop" question="Laptop"/>
-                    <Question type="yes-no" name="internet" question="Servicio de Internet"/>
-                    <Question type="text" name="number-family-members" question="Miembros de la familia"/>
-                    {/*Social*/}
-                    <Question type="select" name="father-study-level" question="Nivel educativo del padre" options={optionsStudyLevel}/>
-                    <Question type="select" name="mother-study-level" question="Nivel educativo de la madre" options={optionsStudyLevel}/>
-                    {/*Academico*/}
-                    <Question type="select" name="pre-school" question="Educacion inicial" options={optionsPreSchool}/>
-                    <Question type="select" name="elementary-school" question="Educacion primaria" options={optionsElementarySchool}/>
-                    <Question type="yes-no" name="reprobate-before" question="Repitio algun grado?"/>
-                    <Question type="text" name="number-reprobate" question="Numero de veces repetidas"/>
-                    <Question type="yes-no" name="vocational-orientation" question="Prueba de orientacion vocacional?"/>
-                    <Question type="yes-no" name="vocational-talk" question="Charla vocacional?"/>
-                    <Question type="yes-no" name="vocational-fair" question="Feria acerca de carreras ofrecidas?"/>
-                    <Question type="yes-no" name="admission-exam-simulation" question="Simulacro examen de admision?"/>
-                    <Question type="yes-no" name="academy-preparation" question="Se preparo en Academia?"/>
-                    <Question type="yes-no" name="study-institute" question="Estudio en Instituto?"/>
+                    <div className='row'>
+                        {/*Economico*/}
+                        <Question key="1" type="select" name="housing-type" question="¿Cual es tu tipo de vivienda?" options={optionsHousingType}/>
+                        <Question key="2" type="select" name="wall-material" question="Material predominante en paredes" options={optionsWallMaterial}/>
+                        <Question key="3" type="select" name="floor-material" question="Material predominante en el piso" options={optionsFloorMaterial}/>
+                        <Question key="4" type="select" name="roof-material" question="Material predominante en el techo" options={optionsRoofMaterial}/>
+                        <Question key="5" type="text" name="number-bedroom" question="Numero de dormitorios"/>
+                        <Question key="6" type="select" name="water-provider" question="Abastecimiento de agua" options={optionsWaterProvider}/>
+                        <Question key="7" type="select" name="drainage" question="Desagüe" options={optionsDrainage}/>
+                        <Question key="8" type="yes-no" name="electricity" question="Electricidad"/>
+                        <Question key="9" type="yes-no" name="stereo" question="Equipo de Sonido"/>
+                        <Question key="10" type="yes-no" name="tv" question="TV"/>
+                        <Question key="11" type="yes-no" name="cable" question="Cable"/>
+                        <Question key="12" type="yes-no" name="fridge" question="Refrigeradora"/>
+                        <Question key="13" type="yes-no" name="computer" question="Computadora"/>
+                        <Question key="14" type="yes-no" name="laptop" question="Laptop"/>
+                        <Question key="15" type="yes-no" name="internet" question="Servicio de Internet"/>
+                        <Question key="16" type="text" name="number-family-members" question="Miembros de la familia"/>
+                        {/*Social*/}
+                        <Question key="17" type="select" name="father-study-level" question="Nivel educativo del padre" options={optionsStudyLevel}/>
+                        <Question key="18" type="select" name="mother-study-level" question="Nivel educativo de la madre" options={optionsStudyLevel}/>
+                        {/*Academico*/}
+                        <Question key="19" type="select" name="pre-school" question="Educacion inicial" options={optionsPreSchool}/>
+                        <Question key="20" type="select" name="elementary-school" question="Educacion primaria" options={optionsElementarySchool}/>
+                        <Question key="21" type="yes-no" name="reprobate-before" question="Repitio algun grado?"/>
+                        <Question key="22" type="text" name="number-reprobate" question="Numero de veces repetidas"/>
+                        <Question key="23" type="yes-no" name="vocational-orientation" question="Prueba de orientacion vocacional?"/>
+                        <Question key="24" type="yes-no" name="vocational-talk" question="Charla vocacional?"/>
+                        <Question key="25" type="yes-no" name="vocational-fair" question="Feria acerca de carreras ofrecidas?"/>
+                        <Question key="26" type="yes-no" name="admission-exam-simulation" question="Simulacro examen de admision?"/>
+                        <Question key="27" type="yes-no" name="academy-preparation" question="Se preparo en Academia?"/>
+                        <Question key="28" type="yes-no" name="study-institute" question="Estudio en Instituto?"/>
+
+                        <button type='button' className="aves-effect waves-light btn" onClick={this.register}>Registrar</button>
+                    </div>
                 </form>
             </div>
         );

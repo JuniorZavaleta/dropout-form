@@ -8,11 +8,11 @@ export default class Question extends Component {
 
         if (type === "select") {
             const listOptions = this.props.options.map((option) =>
-                <option value={option.value}>{option.text}</option>
+                <option key={option.value} value={option.value}>{option.text}</option>
             );
             options = (
                 <select name={name}>
-                    <option>Seleccione una opcion</option>
+                    <option value="">Seleccione una opcion</option>
                     {listOptions}
                 </select>
             );
@@ -22,17 +22,23 @@ export default class Question extends Component {
             );
         } else if (type === "yes-no") {
             options = (
-                <div>
-                    <input type="radio" value="1" name={name}/> <span>Si</span>
-                    <input type="radio" value="0" name={name}/> <span>No</span>
+                <div className="radio-picker">
+                    <label>
+                        <input type="radio" value="1" name={name}/> <span>Si</span>
+                    </label>
+                    <label>
+                        <input type="radio" value="0" name={name}/> <span>No</span>
+                    </label>
                 </div>
             );
         }
 
         return (
             <div className='Question'>
-                <label>{question}</label>
-                {options}
+                <div className="input-field">
+                    {options}
+                    <label>{question}</label>
+                </div>
             </div>
         );
     };
