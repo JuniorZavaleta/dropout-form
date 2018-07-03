@@ -5,9 +5,11 @@ import Question from './Question';
 
 
 class App extends Component {
-    register() {
+    evaluate() {
         try {
-            const fields = [
+            let transfer = (dot_product) => 1.0 / (1.0 + Math.exp(dot_product));
+
+            let inputs = [
                 document.querySelector("[name='housing-type']").value,
                 document.querySelector("[name='wall-material']").value,
                 document.querySelector("[name='floor-material']").value,
@@ -35,8 +37,35 @@ class App extends Component {
                 document.querySelector("[name='vocational-fair']:checked").value,
                 document.querySelector("[name='admission-exam-simulation']:checked").value,
                 document.querySelector("[name='academy-preparation']:checked").value,
-                document.querySelector("[name='study-institute']:checked").value,
+                document.querySelector("[name='study-institute']:checked").value
             ];
+
+            const layers = [
+                [
+                    {'weights': [0.909532717994434, 2.6035693957595476, -3.8326812718565835, 3.483464123850475, 0.3557411697571623, 1.325205826203376, 2.452281832929453, 1.2216228572203245, -1.7817410615177045, -3.498846071810624, 0.5193298868433327, -0.05764924034882375, 0.817028683377804, 1.143623300032747, -1.728365129177547, 2.947908969709713, 4.82388955080138, -2.3893944003358047, -0.3986237107290481, -1.9562010795960878, -2.1580955184930612, 1.7796694199863252, 3.2871865475793767, -1.73751951327974, -1.7207597014792908, 1.6563570192059223, 1.5311893009477846, 2.1360087465969575, 0.014195231558516751]},
+                    {'weights': [0.10656603098690762, -0.3278680460776769, -9.426305680243646, -4.961554447277822, -1.171033357616965, -0.013675498369987606, 0.550999291358174, 0.5790690804884957, 1.2637486560691136, -2.460473360988119, 1.6399375040056587, -2.8991385713154383, -4.021378467865675, -3.7475620060601127, 0.8332252130106403, 2.5117524826432485, 2.8706276152726677, 3.863864027538772, -1.234592973930488, -1.475782852901934, -2.2089030229716373, 1.7781453885088856, -2.0473689323351154, 1.2344845589979039, -1.5565668365123977, 2.404422063768525, 0.6876605171384883, -0.8327273347775438, 0.8408484991003664]},
+                    {'weights': [-2.120178696409013, 2.626065259765804, -1.5308506490756555, 6.690151407610527, 3.3429472204885387, -0.7520764678143141, 4.024064243062337, -0.4048628379732433, 0.5303530960227136, 0.3366846521213568, 3.0737975754584754, 1.5821737730178207, -1.1805543727855832, 3.601334223944201, 5.536888970087858, 3.6234630052744556, -5.2914101081912035, -3.3367203834207593, -3.3508288359466856, -3.092593623630582, -0.2892314569045664, 1.2652664650773562, -1.9371217732245767, 1.107380550847182, 2.5676854121980703, -5.258885083456678, -2.11388789943615, -3.2183972331421535, 1.1861105020510931]}
+                ],
+                [
+                    {'weights': [0.9358162440770081, -0.8118543569424819, 1.0266004737141508, -0.9142018801358482]},
+                    {'weights': [-0.9358162440770086, 0.8118543569424814, -1.0266004737141505, 0.914201880135848]}
+                ]
+            ];
+
+            layers.forEach(layer => {
+                let newInputs = [];
+                inputs.push(1); // bias
+                let dot_product = 0.0;
+                layer.forEach(n => {
+                    n['weights'].forEach((w, i) => dot_product += w * inputs[i]);
+                    newInputs.push(transfer(dot_product));
+                });
+                inputs = newInputs;
+            });
+            console.info(inputs);
+            // 0.8405738333843759, 0.5000000000000001
+
+            // 31.230068904606643, -39.911844357706734, 12.78281538284803
 
         } catch (e) {
             alert("Faltan rellenar campos");
@@ -168,7 +197,7 @@ class App extends Component {
                         <Question key="27" type="yes-no" name="academy-preparation" question="Se preparo en Academia?"/>
                         <Question key="28" type="yes-no" name="study-institute" question="Estudio en Instituto?"/>
 
-                        <button type='button' className="aves-effect waves-light btn" onClick={this.register}>Registrar</button>
+                        <button type='button' className="aves-effect waves-light btn" onClick={this.evaluate}>Evaluar</button>
                     </div>
                 </form>
             </div>
