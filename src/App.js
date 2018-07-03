@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Chart from 'chart.js';
 import Question from './Question';
 
 
@@ -72,7 +73,7 @@ class App extends Component {
                 [
                     {'weights': [-2.4973845059343263, 2.0972606687876145, -0.27327681139826915, 9.109239409179178, -0.6149851150168473, 3.486517160195159, 4.414313437794502, -1.8692045966193371, 0.09235579816816945, 5.047939304930948, -1.973604130897833, 0.3827082259572808, 0.4265827542947065, 0.817450394226428, 3.3977121927137968, 4.121026569159286, -2.2183775050653147, -6.252005664770881, -0.5243934023741268, -1.5754233055216655, 1.7258711824621173, -1.2290376455440541, -0.3542195533798524, -2.572006417805255, 2.5340974610682085, 1.561967006142415, -7.620839918413385, -1.079815392982974, -0.9878354306604791]},
                     {'weights': [1.6658821074114853, 3.935622543338788, 2.6429723119403206, 3.2161483014988943, 1.4964962902406878, 5.129497417531315, -0.2792185438389233, -0.07369931868801155, 1.236813300339612, -1.847152173060586, -1.3066818208384676, 0.4201163550460544, -0.961203098461662, 3.2994556328647486, 3.1293986816549433, 3.248322929432045, -3.966544043987185, -4.484973082871207, -1.149514950152848, 5.1954549631143685, -1.492445803560008, 0.7903216902018516, 1.4751079896039159, 3.9922463122494705, -2.5954051276206758, 1.9764591440682895, 0.8314877844634283, -3.3573774586976066, -1.7005426368000751]},
-                    {'weights': [1.5563644126850138, 0.41184718580369867, -0.30731521003920864, 0.7422979751402078, -0.36232197806132094, 1.8765106445540674, 0.5427468829539197, 0.5675734854273141, 2.60607334087392, -4.748476050706297, 0.6194956105733013, 2.5419702276609204, -1.2475188530156311, 0.25277881383758677, -0.46717821155777645, -0.3472412496440927, -3.5710724812671453, -4.769054986074451, -2.502969697218861, -3.3146343117261137, -2.1930638464730636, 2.6126055187216317, 4.484755477024088, -0.6813286776893394, -2.192383903766252, -5.168074029193504, 3.616333968814836, 1.7124352060084878, 1.1569816419285557], 'delta': -0.042513925228213394}
+                    {'weights': [1.5563644126850138, 0.41184718580369867, -0.30731521003920864, 0.7422979751402078, -0.36232197806132094, 1.8765106445540674, 0.5427468829539197, 0.5675734854273141, 2.60607334087392, -4.748476050706297, 0.6194956105733013, 2.5419702276609204, -1.2475188530156311, 0.25277881383758677, -0.46717821155777645, -0.3472412496440927, -3.5710724812671453, -4.769054986074451, -2.502969697218861, -3.3146343117261137, -2.1930638464730636, 2.6126055187216317, 4.484755477024088, -0.6813286776893394, -2.192383903766252, -5.168074029193504, 3.616333968814836, 1.7124352060084878, 1.1569816419285557]}
                 ],
                 [
                     {'weights': [1.0342098766568357, 1.3613822303524301, 0.5560978904875604, -0.77210103016402]},
@@ -92,12 +93,56 @@ class App extends Component {
                 ]
             ];
 
-            console.info(predict(layers_n1, inputs));
-            console.info(predict(layers_n2, inputs));
-            console.info(predict(layers_n3, inputs));
 
+            // 0: No, 1: Si
+            // let willDropout = (inputs) => inputs.indexOf(Math.max.apply(Math, inputs));
+            let getPosibilities = (predictions) => {
+                let total = predictions[0] + predictions[1];
+                return [
+                    predictions[0] / total * 100,
+                    predictions[1] / total * 100
+                ]
+            };
+
+            let careerPredictions = predict(layers_n1, inputs);
+            let collegePredictions = predict(layers_n2, inputs);
+            let studyingPredictions = predict(layers_n3, inputs);
+            let careerPossibilities = getPosibilities(careerPredictions);
+            let collegePossibilities = getPosibilities(collegePredictions);
+            let studyingPossibilities = getPosibilities(studyingPredictions);
+
+            const ctx = document.getElementById('canvas').getContext('2d');
+            const barChartData = {
+                labels: ['En la carrera', 'En la universidad', 'En los estudios'],
+                datasets: [{
+                    label: 'No se mantiene',
+                    backgroundColor: "#ff3e25",
+                    borderColor: "#ff3e25",
+                    borderWidth: 1,
+                    data: [
+                        careerPossibilities[0],
+                        collegePossibilities[0],
+                        studyingPossibilities[0],
+                    ]
+                }, {
+                    label: 'Si se mantiene',
+                    backgroundColor: "#4a6fff",
+                    borderColor: "#4a6fff",
+                    borderWidth: 1,
+                    data: [
+                        careerPossibilities[1],
+                        collegePossibilities[1],
+                        studyingPossibilities[1],
+                    ]
+                }]
+            };
+            new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: []
+            });
         } catch (e) {
-            alert("Faltan rellenar campos");
+            console.error(e);
         }
     }
 
@@ -241,6 +286,8 @@ class App extends Component {
 
                         <button type='button' className="aves-effect waves-light btn" onClick={this.evaluate}>Evaluar
                         </button>
+
+                        <canvas id='canvas'></canvas>
                     </div>
                 </form>
             </div>
